@@ -56,6 +56,45 @@ public class ParticleCollider {
 		return new Grid(data);
 	}
 	
+	public static void clearFullRows(Grid grid, int start, int end)
+	{
+		int[][] data = grid.getData();
+		// Cannot shift past the grid
+		end = end > grid.getHeight()-1 ? grid.getHeight()-1 : end;
+		int w = grid.getWidth();
+		int d = end - start;
+		assert(d > 0);
+		int fullRow = end;
+
+		// Shift over full rows in range
+		for(int i = end; i >= start; --i) {
+			boolean isHoled = false;
+			for (int j = 0; j < w; j++) {
+				if (data[i][j] == 0) {
+					isHoled = true;
+					break;
+				}
+			}
+
+			if (isHoled) {
+				if (fullRow != i)
+					data[fullRow] = data[i];
+				fullRow -= 1;
+			}
+		}
+
+		// Finish shift
+		for (int i = start-1; i >= 0; --i) {
+			data[fullRow] = data[i];
+			fullRow -= 1;
+		}
+
+		// Clear free space
+		for (; fullRow >= 0; --fullRow) {
+			data[fullRow] = new int[w];
+		}
+	}
+
 	private static int[][] transposeGrid(int[][] data)
 	{
 		int l = data.length;
@@ -79,70 +118,6 @@ public class ParticleCollider {
 			data[i] = data[h-i];
 			data[h-i] = tmp;
 		}
-		return data;
-	}
-	
-	private static int[][] shiftGrid(int[][] data)
-	{
-		int w = data.length;
-		int fullRows = w;
-		for(int i = w-1; i >= 0; --i) {
-			boolean isEmpty = true;
-			for (int j = 0; j < w; j++) {
-				if (data[i][j] != 0) {
-					isEmpty = false;
-					break;
-				}
-			}
-			if (isEmpty)
-				fullRows -= 1;
-			else
-				break;
-		}
-		int fullCols = w;
-		for(int i = 0; i < w; i++) {
-			boolean isEmpty = true;
-			for (int j = 0; j < w; j++) {
-				if (data[j][i] != 0) {
-					isEmpty = false;
-					break;
-				}
-			}
-			/* Already where we need it */
-			if (isEmpty)
-				fullCols -= 1;
-			else
-				break;
-		}
-		
-		if (fullRows != w) {
-			/* Shift rows down */
-			for (int i = 0; i < fullRows; i++) {
-				data[w - 1 - i] = data[fullRows - 1 - i];
-			}
-			
-			/* Clear free space */
-			for (int i = 0; i < w - fullRows; i++) {
-				data[i] = new int [w];
-			}
-		}
-		
-		if (fullCols != w) {
-			/* Shift cols left */
-			for (int i = w - fullRows; i < w; i++) {
-				for (int j = 0; j < fullCols; j++) {
-					data[i][j] = data[i][w - fullCols + j];
-				}
-			}
-			
-			/* Clear free space */
-			for (int i = w - fullRows; i < w; i++) {
-				for (int j = 0; j < w - fullCols; j++) {
-					data[i][j + fullCols] = 0;
-				}
-			}
-		}
-		
 		return data;
 	}
 }

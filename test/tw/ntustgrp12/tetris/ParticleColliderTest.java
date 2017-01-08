@@ -183,4 +183,86 @@ public class ParticleColliderTest {
 		assertTrue(Arrays.deepEquals(BigI.getData(), BigI1.getData()));
 		BigI = ParticleCollider.getRotatedGrid(BigI);
 	}
+
+	@Test
+	public void testDeleteRows() {
+		Grid undeleted1 = new Grid(Utils.stringToArrays(
+				"      "+
+		        " X X X"+
+				"XXXXXX"+
+		        "XXX XX"+
+				"X XXXX"+
+		        "XXXXXX"));
+
+		Grid deleted1 = new Grid(Utils.stringToArrays(
+				"      "+
+				"      "+
+				"      "+
+				" X X X"+
+				"XXX XX"+
+				"X XXXX"));
+
+		Grid undeleted2 = new Grid(Utils.stringToArrays(
+				"XXXXXX"+
+		        "XX X X"+
+				"XXXXXX"+
+		        "XXX XX"+
+				"X XX X"+
+		        "XXXXXX"));
+
+		Grid deleted2 = new Grid(Utils.stringToArrays(
+				"      "+
+				"      "+
+				"XXXXXX"+
+				"XX X X"+
+				"XXX XX"+
+				"X XX X"));
+
+		Grid undeleted3 = new Grid(Utils.stringToArrays(
+				"XXXXXX"+
+		        "XX X X"+
+				"XXXXXX"+
+		        "XXX XX"+
+				"X XX X"+
+		        "XXXXXX"));
+
+		Grid deleted3 = new Grid(Utils.stringToArrays(
+				"      "+
+				"      "+
+				"XX X X"+
+				"XXX XX"+
+				"X XX X"+
+				"XXXXXX"));
+
+		ParticleCollider.clearFullRows(undeleted1, 2, 5);
+		ParticleCollider.clearFullRows(undeleted2, 2, 5);
+		ParticleCollider.clearFullRows(undeleted3, 0, 4);
+
+		assertTrue(Arrays.deepEquals(undeleted1.getData(), deleted1.getData()));
+		assertTrue(Arrays.deepEquals(undeleted2.getData(), deleted2.getData()));
+		assertTrue(Arrays.deepEquals(undeleted3.getData(), deleted3.getData()));
+	}
+
+	@Test
+	public void testDeleteLongRows() {
+		Grid undeleted1 = new Grid(Utils.stringToArrays(
+				"      "+
+		        " X X X"+
+				"XXXXXX"+
+		        "XXX XX"+
+				"X XXXX"+
+		        "XXXXXX"));
+
+		Grid deleted1 = new Grid(Utils.stringToArrays(
+				"      "+
+				"      "+
+				"      "+
+				" X X X"+
+				"XXX XX"+
+				"X XXXX"));
+
+		ParticleCollider.clearFullRows(undeleted1, 2, 6);
+
+		assertTrue(Arrays.deepEquals(undeleted1.getData(), deleted1.getData()));
+	}
 }

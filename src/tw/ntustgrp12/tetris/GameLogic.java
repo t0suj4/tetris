@@ -83,6 +83,11 @@ public class GameLogic {
 				block.getGrid(),
 				block.x, block.y);
 
+		ParticleCollider.clearFullRows(
+				board.getGrid(),
+				block.y,
+				block.y + block.getGrid().getHeight() -1);
+
 		regenBlock();
 	}
 
