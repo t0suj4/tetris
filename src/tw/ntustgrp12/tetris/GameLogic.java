@@ -1,9 +1,13 @@
 package tw.ntustgrp12.tetris;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import tw.ntustgrp12.tetris.block.BlockGenerator;
 
 public class GameLogic {
 	private final BlockGenerator generator;
+	private final Timer timer;
 	private GameBoard board;
 	
 	private final int START_X = 4;
@@ -13,6 +17,8 @@ public class GameLogic {
 	{
 		this.board = board;
 		this.generator = generator;
+		this.timer = new Timer(true);
+		this.timer.schedule(new Dropper(this), 2000, 600);
 		regenBlock();
 	}
 	
@@ -106,5 +112,20 @@ public class GameLogic {
 	private void update()
 	{
 		board.notifyObservers();
+	}
+	
+	private class Dropper extends TimerTask {
+		private final GameLogic gameLogic;
+		
+		public Dropper(GameLogic gameLogic)
+		{
+			this.gameLogic = gameLogic;
+		}
+		
+		@Override
+		public void run()
+		{
+			gameLogic.moveDown();
+		}
 	}
 }
