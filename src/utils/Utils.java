@@ -19,7 +19,7 @@ public class Utils {
 		for(int i = 0; i < len; i++) {
 			for(int j = 0; j < len; j++) {
 				char aChar = chars[j+i*len];
-				data[j][i] = (aChar == ' ') ? 0 : 1;
+				data[i][j] = (aChar == ' ') ? 0 : 1;
 			}
 		}
 		return data;

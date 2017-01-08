@@ -31,8 +31,8 @@ public class GridTest {
 		assertTrue(data[19][19] == 0);
 		Grid grid1 = new Grid(20,40);
 		data = grid1.getData();
-		for (int i = 0; i < grid1.getWidth(); i++)
-			for (int j = 0; j < grid1.getHeight(); j++)
+		for (int i = 0; i < grid1.getHeight(); i++)
+			for (int j = 0; j < grid1.getWidth(); j++)
 				assertTrue(data[i][j] == 0);
 		Grid grid2 = new Grid(Utils.stringToArrays("   XXX   "));
 		data = grid2.getData();

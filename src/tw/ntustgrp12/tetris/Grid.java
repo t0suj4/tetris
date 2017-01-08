@@ -12,7 +12,7 @@ public class Grid implements java.io.Serializable {
 	{
 		this.width = width;
 		this.height = height;
-		this.data = new int[width][height];
+		this.data = new int[height][width];
 	}
 	
 	public Grid(int[][] data)

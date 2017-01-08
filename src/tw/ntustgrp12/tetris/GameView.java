@@ -41,14 +41,14 @@ public class GameView extends Canvas {
 	private void paintBlockGrid(Graphics g, Grid grid, int x, int y)
 	{
 		int[][] data = grid.getData();
-		for (int i = 0; i < grid.getWidth(); i++) {
-			for (int j = 0; j < grid.getHeight(); j++) {
+		for (int i = 0; i < grid.getHeight(); i++) {
+			for (int j = 0; j < grid.getWidth(); j++) {
 				if (data[i][j] != 0) {
 					g.setColor(Color.GREEN);
-					g.drawRect(x*10 + i*10, y*10 + j*10, 10, 10);
+					g.drawRect(x*10 + j*10, y*10 + i*10, 10, 10);
 				} else {
 					g.setColor(Color.YELLOW);
-					g.drawRect(x*10 + i*10, y*10 + j*10, 10, 10);
+					g.drawRect(x*10 + j*10, y*10 + i*10, 10, 10);
 				}
 			}
 		}
@@ -58,14 +58,14 @@ public class GameView extends Canvas {
 	private void paintGrid(Graphics g, Grid grid, int x, int y)
 	{
 		int[][] data = grid.getData();
-		for (int i = 0; i < grid.getWidth(); i++) {
-			for (int j = 0; j < grid.getHeight(); j++) {
+		for (int i = 0; i < grid.getHeight(); i++) {
+			for (int j = 0; j < grid.getWidth(); j++) {
 				if (data[i][j] != 0) {
 					g.setColor(Color.BLACK);
-					g.drawRect(x*10 + i*10, y*10 + j*10, 10, 10);
+					g.drawRect(x*10 + j*10, y*10 + i*10, 10, 10);
 				} else {
 					g.setColor(Color.WHITE);
-					g.drawRect(x*10 + i*10, y*10 + j*10, 10, 10);
+					g.drawRect(x*10 + j*10, y*10 + i*10, 10, 10);
 				}
 			}
 		}

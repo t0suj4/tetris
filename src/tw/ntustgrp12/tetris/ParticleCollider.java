@@ -14,9 +14,9 @@ public class ParticleCollider {
 		int[][] gdata = grid.getData();
 		
 		try {
-			for(int i = 0; i < w; i++) {
-				for(int j = 0; j < h; j++){
-					if(gdata[i][j] != 0 && tdata[x+i][y+j] != 0)
+			for(int i = 0; i < h; i++) {
+				for(int j = 0; j < w; j++){
+					if(gdata[i][j] != 0 && tdata[y+i][x+j] != 0)
 						return true;
 				}
 			}
@@ -35,10 +35,10 @@ public class ParticleCollider {
 		int[][] tdata = tarGrid.getData();
 		int[][] gdata = grid.getData();
 		
-		for(int i = 0; i < w; i++) {
-			for(int j = 0; j < h; j++) {
+		for(int i = 0; i < h; i++) {
+			for(int j = 0; j < w; j++) {
 				if (gdata[i][j] != 0)
-					tdata[x+i][y+j] = gdata[i][j];
+					tdata[y+i][x+j] = gdata[i][j];
 			}
 		}
 	}
@@ -49,8 +49,8 @@ public class ParticleCollider {
 			throw new RuntimeException("Can't rotate rectangular grid!");
 				
 		int[][] data = Cloner.shared().deepClone(grid.getData());
-		data = transposeGrid(data);
 		data = reverseGrid(data);
+		data = transposeGrid(data);
 		//data = shiftGrid(data);
 		
 		return new Grid(data);
