@@ -15,8 +15,22 @@ public enum BlockShape {
 	BIG_I(	" X  "+
 			" X  "+
 			" X  "+
-			" X  ");
-	//TODO add other blocks
+			" X  "),
+	
+	A_SQUARE("XX"+
+			 "XX"),
+	
+	THE_T(   "   "+
+			 "XXX"+
+			 " X "),
+	
+	RIGHT_Z( "   "+
+			 " XX"+
+			 "XX "),
+	
+	LEFT_Z(  "   "+
+			 "XX "+
+			 " XX");
 	
 	private final Grid shape;
 	
