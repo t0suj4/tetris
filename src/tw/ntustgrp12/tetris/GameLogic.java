@@ -10,7 +10,6 @@ public class GameLogic {
 	private final Timer timer;
 	private GameBoard board;
 	
-	private final int START_X = 4;
 	private final int START_Y = 0;
 	
 	public GameLogic(BlockGenerator generator, GameBoard board)
@@ -36,6 +35,7 @@ public class GameLogic {
 	
 	public void moveDown()
 	{
+		// Hit something, attach the block
 		if (!move(0, 1))
 			fixBlock();
 		update();
@@ -45,6 +45,7 @@ public class GameLogic {
 	{
 		PosGrid block = board.getBlock();
 		Grid rot = ParticleCollider.getRotatedGrid(block.getGrid());
+		// Cannot rotate into objects
 		if (ParticleCollider.collide(board.getGrid(), rot,
 									 block.x, block.y))
 			return;
@@ -81,34 +82,40 @@ public class GameLogic {
 				board.getGrid(),
 				block.getGrid(),
 				block.x, block.y);
-		
+
 		regenBlock();
 	}
-	
+
 	private void regenBlock()
 	{
 		Grid freshGrid = generator.generate();
 		PosGrid block = board.getBlock();
 		
+		// Is the spawn location occupied?
 		if(ParticleCollider.collide(
 				board.getGrid(),
 				freshGrid,
-				START_X, START_Y)) {
+				getCenter(freshGrid), START_Y)) {
 			gameOver();
 			block.getGrid().clear();
 		} else {
 			block.setGrid(freshGrid);
-			block.x = START_X;
+			block.x = getCenter(freshGrid);
 			block.y = START_Y;
 		}
-		
 	}
 	
+	// Get center of the grid placement
+	private int getCenter(Grid grid)
+	{
+		return board.getGrid().getWidth()/2 - grid.getWidth()/2;
+	}
+
 	private void gameOver()
 	{
 		throw new RuntimeException("Not implemented!");
 	}
-	
+
 	private void update()
 	{
 		board.notifyObservers();
