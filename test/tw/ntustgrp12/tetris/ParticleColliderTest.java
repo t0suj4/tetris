@@ -47,17 +47,17 @@ public class ParticleColliderTest {
 				"     "+
 				"X   X"+
 				"XX XX"));
-		ParticleCollider.mergeGrids(bigGrid, grid1, 0, 2);
+		ParticleCollider.mergeGrids(bigGrid, grid1, 2, 0);
 		ParticleCollider.mergeGrids(bigGrid, grid4, 0, 0);
 		assertTrue(Arrays.deepEquals(bigGrid.getData(), mergedGrid.getData()));
 	}
 
 	@Test
 	public void testCollideBig() {
-		assertFalse(ParticleCollider.collide(bigGrid, grid1, 0, 2));
-		assertTrue(ParticleCollider.collide(bigGrid, grid1, 0, 1));
-		assertFalse(ParticleCollider.collide(bigGrid, grid2, 3, 1));
-		assertTrue(ParticleCollider.collide(bigGrid, grid2, 3, 2));
+		assertFalse(ParticleCollider.collide(bigGrid, grid1, 2, 0));
+		assertTrue(ParticleCollider.collide(bigGrid, grid1, 1, 0));
+		assertFalse(ParticleCollider.collide(bigGrid, grid2, 1, 3));
+		assertTrue(ParticleCollider.collide(bigGrid, grid2, 2, 3));
 	}
 	
 	@Test

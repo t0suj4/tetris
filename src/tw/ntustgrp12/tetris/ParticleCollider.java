@@ -49,8 +49,8 @@ public class ParticleCollider {
 			throw new RuntimeException("Can't rotate rectangular grid!");
 				
 		int[][] data = Cloner.shared().deepClone(grid.getData());
-		data = reverseGrid(data);
 		data = transposeGrid(data);
+		data = reverseGrid(data);
 		//data = shiftGrid(data);
 		
 		return new Grid(data);
