@@ -1,7 +1,5 @@
 package tw.ntustgrp12.tetris;
 
-import java.awt.Canvas;
-
 import tw.ntustgrp12.tetris.block.BlockGenerator;
 import tw.ntustgrp12.tetris.block.RandomBlockGenerator;
 
@@ -21,10 +19,5 @@ public class GameFactory {
 	{
 		BlockGenerator generator = new RandomBlockGenerator();
 		return new GameLogic(generator, board);
-	}
-	
-	public static GameBoardObserver newBoardObserver(Canvas canvas)
-	{
-		return new GameBoardObserver(canvas);
 	}
 }

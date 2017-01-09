@@ -3,30 +3,26 @@ package tw.ntustgrp12.tetris;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Observable;
+import java.util.Observer;
 
 @SuppressWarnings("serial")
-public class GameView extends Canvas {
+public class GameView extends Canvas implements Observer {
 	
-	private GameBoardObserver boardObserver;
+	private GameBoard gameBoard;
 	
 	public GameView()
 	{
 		setSize(320,240);
 	}
-	
-	public void setBoardObserver(GameBoardObserver boardObserver)
-	{
-		this.boardObserver = boardObserver;
-	}
 		
 	public void paint(Graphics g)
 	{
 		super.paint(g);
-		GameBoard board = boardObserver.getBoard();
-		if (board != null) {
-			paintGameGrid(g, board.getGrid(), 0, 0);
+		if (gameBoard != null) {
+			paintGameGrid(g, gameBoard.getGrid(), 0, 0);
 		
-			PosGrid block = board.getBlock();
+			PosGrid block = gameBoard.getBlock();
 			paintBlockGrid(g, block.getGrid(), block.x, block.y);
 		} else {
 		}
@@ -69,6 +65,12 @@ public class GameView extends Canvas {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void update(Observable board, Object arg1) {
+		this.gameBoard = (GameBoard) board;
+		repaint();
 	}
 
 }

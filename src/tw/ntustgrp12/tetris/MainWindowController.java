@@ -17,9 +17,7 @@ public class MainWindowController {
 		GameLogic gameLogic = GameFactory.newLogic(gameBoard);
 		KeyAdapter controller = new GameController(gameLogic);
 		GameView gameView = new GameView();
-		GameBoardObserver boardObserver = new GameBoardObserver(gameView);
-		gameView.setBoardObserver(boardObserver);
-		gameBoard.addObserver(boardObserver);
+		gameBoard.addObserver(gameView);
 		gameBoard.notifyObservers();
 		frame.addKeyListener(controller);
 		frame.add(gameView);
