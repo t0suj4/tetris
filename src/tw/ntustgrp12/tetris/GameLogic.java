@@ -57,10 +57,14 @@ public class GameLogic {
 	
 	public void land()
 	{
-		
+		// Move block down to the bottom of the screen
+		for (int i = 0; i < board.getGrid().getHeight() &&
+				 move(0, 1); i++);
+		fixBlock();
+		update();
 	}
 
-	private boolean move(int x, int y)
+	private synchronized boolean move(int x, int y)
 	{
 		PosGrid block = board.getBlock();
 		
