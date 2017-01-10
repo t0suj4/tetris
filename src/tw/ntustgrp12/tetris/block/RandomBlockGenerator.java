@@ -2,6 +2,8 @@ package tw.ntustgrp12.tetris.block;
 
 import java.util.Random;
 
+import com.rits.cloning.Cloner;
+
 import tw.ntustgrp12.tetris.board.Grid;
 import utils.Utils;
 
@@ -16,7 +18,8 @@ public class RandomBlockGenerator implements BlockGenerator {
 	
 	@Override
 	public Grid generate() {
-		return Utils.randomEnum(BlockShape.class, random).getShape();
+		Grid shape = Utils.randomEnum(BlockShape.class, random).getShape();
+		return Cloner.shared().deepClone(shape);
 	}
 
 }
