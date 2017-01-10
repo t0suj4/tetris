@@ -1,7 +1,9 @@
 package tw.ntustgrp12.tetris;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
 
 import tw.ntustgrp12.tetris.block.BlockGenerator;
 import tw.ntustgrp12.tetris.board.*;
@@ -14,11 +16,16 @@ public class GameLogic {
 	private boolean gameOver;
 	
 	private final int START_Y = 0;
+	private final int TIMER_START = 600;
+	private final int TIMER_STEP = 10;
+	private final int TIMER_MIN  = 50;
+	private final int TIMER_HOLD = 500;
 	
 	public GameLogic(BlockGenerator generator, GameBoard board)
 	{
 		this.board = board;
 		this.generator = generator;
+		this.timer = new Timer(TIMER_START*2, new Dropper(this));
 		reset();
 	}
 	
@@ -108,6 +115,10 @@ public class GameLogic {
 				block.y + block.getGrid().getHeight() -1);
 
 		board.setScore(addScore + board.getScore());
+		int newDelay = timer.getDelay() - addScore*TIMER_STEP;
+		timer.setDelay(Math.max(newDelay, TIMER_MIN));
+		timer.setInitialDelay(TIMER_HOLD);
+		timer.restart();
 
 		regenBlock();
 	}
@@ -142,10 +153,8 @@ public class GameLogic {
 
 	public synchronized void reset()
 	{
-		if (timer != null)
-			timer.cancel();
-		timer = new Timer(true);
-		timer.schedule(new Dropper(this), 1000, 600);
+		timer.setDelay(TIMER_START);
+		timer.start();
 		resetBoard();
 		regenBlock();
 		gameOver = false;
@@ -155,7 +164,7 @@ public class GameLogic {
 	private void gameOver()
 	{
 		gameOver = true;
-		timer.cancel();
+		timer.stop();
 		board.setNextBlock(null);
 		board.setGameOver(true);
 	}
@@ -175,7 +184,7 @@ public class GameLogic {
 		board.notifyObservers();
 	}
 	
-	private class Dropper extends TimerTask {
+	private class Dropper implements ActionListener {
 		private final GameLogic gameLogic;
 		
 		public Dropper(GameLogic gameLogic)
@@ -184,7 +193,7 @@ public class GameLogic {
 		}
 		
 		@Override
-		public void run()
+		public void actionPerformed(ActionEvent e)
 		{
 			gameLogic.moveDown();
 		}
