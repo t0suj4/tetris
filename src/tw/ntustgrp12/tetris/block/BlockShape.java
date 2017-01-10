@@ -1,6 +1,6 @@
 package tw.ntustgrp12.tetris.block;
 
-import tw.ntustgrp12.tetris.Grid;
+import tw.ntustgrp12.tetris.board.Grid;
 import utils.Utils;
 
 public enum BlockShape {

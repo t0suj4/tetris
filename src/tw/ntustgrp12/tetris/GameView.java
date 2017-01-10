@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.util.Observable;
 import java.util.Observer;
 
+import tw.ntustgrp12.tetris.board.*;
+
 @SuppressWarnings("serial")
 public class GameView extends Canvas implements Observer {
 	

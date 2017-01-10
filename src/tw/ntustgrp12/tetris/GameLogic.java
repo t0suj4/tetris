@@ -4,6 +4,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import tw.ntustgrp12.tetris.block.BlockGenerator;
+import tw.ntustgrp12.tetris.board.*;
+import utils.ParticleCollider;
 
 public class GameLogic {
 	private final BlockGenerator generator;

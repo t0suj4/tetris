@@ -2,7 +2,7 @@ package tw.ntustgrp12.tetris.block;
 
 import java.util.Random;
 
-import tw.ntustgrp12.tetris.Grid;
+import tw.ntustgrp12.tetris.board.Grid;
 import utils.Utils;
 
 public class RandomBlockGenerator implements BlockGenerator {

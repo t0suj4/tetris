@@ -7,6 +7,8 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
+import tw.ntustgrp12.tetris.board.Grid;
+import utils.ParticleCollider;
 import utils.Utils;
 
 public class ParticleColliderTest {

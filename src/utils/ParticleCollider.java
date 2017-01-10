@@ -1,6 +1,8 @@
-package tw.ntustgrp12.tetris;
+package utils;
 
 import com.rits.cloning.Cloner;
+
+import tw.ntustgrp12.tetris.board.Grid;
 
 /* Used collide particles in CERN, now collides tetris bricks! */
 public class ParticleCollider {

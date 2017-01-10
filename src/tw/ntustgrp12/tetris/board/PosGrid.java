@@ -1,4 +1,4 @@
-package tw.ntustgrp12.tetris;
+package tw.ntustgrp12.tetris.board;
 
 @SuppressWarnings("serial")
 public class PosGrid implements java.io.Serializable {

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import tw.ntustgrp12.tetris.board.Grid;
 import utils.Utils;
 
 public class GridTest {
