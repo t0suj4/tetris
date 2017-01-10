@@ -58,7 +58,7 @@ public class ParticleCollider {
 		return new Grid(data);
 	}
 	
-	public static void clearFullRows(Grid grid, int start, int end)
+	public static int clearFullRows(Grid grid, int start, int end)
 	{
 		int[][] data = grid.getData();
 		// Cannot shift past the grid
@@ -84,6 +84,7 @@ public class ParticleCollider {
 				fullRow -= 1;
 			}
 		}
+		int cleared = fullRow - start + 1;
 
 		// Finish shift
 		for (int i = start-1; i >= 0; --i) {
@@ -95,6 +96,8 @@ public class ParticleCollider {
 		for (; fullRow >= 0; --fullRow) {
 			data[fullRow] = new int[w];
 		}
+
+		return cleared;
 	}
 
 	private static int[][] transposeGrid(int[][] data)

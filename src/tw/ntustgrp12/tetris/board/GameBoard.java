@@ -6,6 +6,8 @@ import java.util.Observable;
 public class GameBoard extends Observable implements java.io.Serializable {
 	private final Grid grid;
 	private final PosGrid block;
+	private Grid nextBlock;
+	private int score;
 	
 	public GameBoard(Grid grid, PosGrid block)
 	{
@@ -23,6 +25,26 @@ public class GameBoard extends Observable implements java.io.Serializable {
 		return block;
 	}
 	
+	public int getScore()
+	{
+		return score;
+	}
+
+	public void setScore(int score)
+	{
+		this.score = score;
+	}
+
+	public Grid getNextBlock()
+	{
+		return nextBlock;
+	}
+
+	public void setNextBlock(Grid nextBlock)
+	{
+		this.nextBlock = nextBlock;
+	}
+
 	@Override
 	public void notifyObservers()
 	{

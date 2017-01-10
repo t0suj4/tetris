@@ -89,31 +89,39 @@ public class GameLogic {
 				block.getGrid(),
 				block.x, block.y);
 
+		int addScore =
 		ParticleCollider.clearFullRows(
 				board.getGrid(),
 				block.y,
 				block.y + block.getGrid().getHeight() -1);
+
+		board.setScore(addScore + board.getScore());
 
 		regenBlock();
 	}
 
 	private void regenBlock()
 	{
-		Grid freshGrid = generator.generate();
+		Grid next = board.getNextBlock();
 		PosGrid block = board.getBlock();
 		
+		if (next == null)
+			next = generator.generate();
+
 		// Is the spawn location occupied?
 		if(ParticleCollider.collide(
 				board.getGrid(),
-				freshGrid,
-				getCenter(freshGrid), START_Y)) {
+				next,
+				getCenter(next), START_Y)) {
 			gameOver();
 			block.getGrid().clear();
 		} else {
-			block.setGrid(freshGrid);
-			block.x = getCenter(freshGrid);
+			block.setGrid(next);
+			block.x = getCenter(next);
 			block.y = START_Y;
 		}
+
+		board.setNextBlock(generator.generate());
 	}
 	
 	// Get center of the grid placement
