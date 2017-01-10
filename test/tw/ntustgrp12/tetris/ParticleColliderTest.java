@@ -236,9 +236,13 @@ public class ParticleColliderTest {
 				"X XX X"+
 				"XXXXXX"));
 
-		ParticleCollider.clearFullRows(undeleted1, 2, 5);
-		ParticleCollider.clearFullRows(undeleted2, 2, 5);
-		ParticleCollider.clearFullRows(undeleted3, 0, 4);
+		int n1 = ParticleCollider.clearFullRows(undeleted1, 2, 5);
+		int n2 = ParticleCollider.clearFullRows(undeleted2, 2, 5);
+		int n3 = ParticleCollider.clearFullRows(undeleted3, 0, 4);
+
+		assertEquals(n1, 2);
+		assertEquals(n2, 2);
+		assertEquals(n3, 2);
 
 		assertTrue(Arrays.deepEquals(undeleted1.getData(), deleted1.getData()));
 		assertTrue(Arrays.deepEquals(undeleted2.getData(), deleted2.getData()));
@@ -263,8 +267,9 @@ public class ParticleColliderTest {
 				"XXX XX"+
 				"X XXXX"));
 
-		ParticleCollider.clearFullRows(undeleted1, 2, 6);
+		int n = ParticleCollider.clearFullRows(undeleted1, 2, 6);
 
+		assertEquals(n, 2);
 		assertTrue(Arrays.deepEquals(undeleted1.getData(), deleted1.getData()));
 	}
 }

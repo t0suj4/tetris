@@ -4,7 +4,7 @@ import com.rits.cloning.Cloner;
 
 import tw.ntustgrp12.tetris.board.Grid;
 
-/* Used collide particles in CERN, now collides tetris bricks! */
+// Used collide particles in CERN, now collides tetris bricks!
 public class ParticleCollider {
 	
 	public static boolean collide(Grid tarGrid, Grid grid, int x, int y)
@@ -53,7 +53,6 @@ public class ParticleCollider {
 		int[][] data = Cloner.shared().deepClone(grid.getData());
 		data = reverseGrid(data);
 		data = transposeGrid(data);
-		//data = shiftGrid(data);
 		
 		return new Grid(data);
 	}
@@ -113,7 +112,7 @@ public class ParticleCollider {
 		return data;
 	}
 	
-	/* Reverse rows */
+	// Reverse rows
 	private static int[][] reverseGrid(int[][] data)
 	{
 		int l = data.length/2;

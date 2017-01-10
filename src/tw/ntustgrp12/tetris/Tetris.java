@@ -24,16 +24,15 @@ public class Tetris {
 		KeyAdapter controller = new GameController(gameLogic);
 		GameView gameView = new GameView();
 		gameBoard.addObserver(gameView);
-		/* Refresh gameView, it now has data! */
+		// Refresh gameView, it now has data!
 		gameBoard.notifyObservers();
 
-		/* gameView needs to stay focused! */
+		// gameView needs to stay focused!
 		frame.addWindowListener(new WindowAdapter() {
 
 			@Override
 			public void windowActivated(WindowEvent e) {
 				gameView.requestFocus();
-				System.out.println("Changed state!");
 			}
 		});
 
@@ -41,7 +40,7 @@ public class Tetris {
 		frame.add(gameView);
 		frame.pack();
 
-		/* Run the game! */
+		// Run the game!
 		frame.setVisible(true);
 	}
 

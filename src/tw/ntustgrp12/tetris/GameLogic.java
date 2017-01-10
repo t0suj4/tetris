@@ -89,7 +89,6 @@ public class GameLogic {
 
 		block.x += x;
 		block.y += y;
-		System.out.println("Moving to "+block.x+" "+block.y);
 		return true;
 	}
 	
