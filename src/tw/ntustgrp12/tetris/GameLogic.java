@@ -11,9 +11,8 @@ import utils.ParticleCollider;
 
 public class GameLogic {
 	private final BlockGenerator generator;
-	private Timer timer;
+	private final Timer timer;
 	private GameBoard board;
-	private boolean gameOver;
 	
 	private final int START_Y = 0;
 	private final int TIMER_START = 600;
@@ -31,7 +30,7 @@ public class GameLogic {
 	
 	public synchronized void moveLeft()
 	{
-		if (gameOver)
+		if (board.isGameOver())
 			return;
 
 		if(move(-1, 0))
@@ -40,7 +39,7 @@ public class GameLogic {
 	
 	public synchronized void moveRight()
 	{
-		if (gameOver)
+		if (board.isGameOver())
 			return;
 
 		if (move(1, 0))
@@ -49,7 +48,7 @@ public class GameLogic {
 	
 	public synchronized void moveDown()
 	{
-		if (gameOver)
+		if (board.isGameOver())
 			return;
 
 		// Hit something, attach the block
@@ -60,7 +59,7 @@ public class GameLogic {
 	
 	public synchronized void rotate()
 	{
-		if (gameOver)
+		if (board.isGameOver())
 			return;
 
 		PosGrid block = board.getBlock();
@@ -75,7 +74,7 @@ public class GameLogic {
 	
 	public synchronized void land()
 	{
-		if (gameOver)
+		if (board.isGameOver())
 			return;
 		// Move block down by up to one board height
 		for (int i = 0; i < board.getGrid().getHeight() &&
@@ -157,16 +156,14 @@ public class GameLogic {
 		timer.start();
 		resetBoard();
 		regenBlock();
-		gameOver = false;
 		update();
 	}
 
 	private void gameOver()
 	{
-		gameOver = true;
+		board.setGameOver(true);
 		timer.stop();
 		board.setNextBlock(null);
-		board.setGameOver(true);
 	}
 
 	private void resetBoard()
