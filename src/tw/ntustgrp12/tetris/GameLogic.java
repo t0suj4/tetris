@@ -9,8 +9,9 @@ import utils.ParticleCollider;
 
 public class GameLogic {
 	private final BlockGenerator generator;
-	private final Timer timer;
+	private Timer timer;
 	private GameBoard board;
+	private boolean gameOver;
 	
 	private final int START_Y = 0;
 	
@@ -18,33 +19,43 @@ public class GameLogic {
 	{
 		this.board = board;
 		this.generator = generator;
-		this.timer = new Timer(true);
-		this.timer.schedule(new Dropper(this), 2000, 600);
-		regenBlock();
+		reset();
 	}
 	
-	public void moveLeft()
+	public synchronized void moveLeft()
 	{
+		if (gameOver)
+			return;
+
 		if(move(-1, 0))
 			update();
 	}
 	
-	public void moveRight()
+	public synchronized void moveRight()
 	{
+		if (gameOver)
+			return;
+
 		if (move(1, 0))
 			update();
 	}
 	
-	public void moveDown()
+	public synchronized void moveDown()
 	{
+		if (gameOver)
+			return;
+
 		// Hit something, attach the block
 		if (!move(0, 1))
 			fixBlock();
 		update();
 	}
 	
-	public void rotate()
+	public synchronized void rotate()
 	{
+		if (gameOver)
+			return;
+
 		PosGrid block = board.getBlock();
 		Grid rot = ParticleCollider.getRotatedGrid(block.getGrid());
 		// Cannot rotate into objects
@@ -55,25 +66,27 @@ public class GameLogic {
 		update();
 	}
 	
-	public void land()
+	public synchronized void land()
 	{
-		// Move block down to the bottom of the screen
+		if (gameOver)
+			return;
+		// Move block down by up to one board height
 		for (int i = 0; i < board.getGrid().getHeight() &&
 				 move(0, 1); i++);
 		fixBlock();
 		update();
 	}
 
-	private synchronized boolean move(int x, int y)
+	private boolean move(int x, int y)
 	{
 		PosGrid block = board.getBlock();
-		
+
 		if (ParticleCollider.collide(
 				board.getGrid(),
 				block.getGrid(),
 				block.x+x, block.y + y))
 			return false;
-		
+
 		block.x += x;
 		block.y += y;
 		System.out.println("Moving to "+block.x+" "+block.y);
@@ -83,7 +96,7 @@ public class GameLogic {
 	private void fixBlock()
 	{
 		PosGrid block = board.getBlock();
-		
+
 		ParticleCollider.mergeGrids(
 				board.getGrid(),
 				block.getGrid(),
@@ -114,14 +127,12 @@ public class GameLogic {
 				next,
 				getCenter(next), START_Y)) {
 			gameOver();
-			block.getGrid().clear();
 		} else {
 			block.setGrid(next);
 			block.x = getCenter(next);
 			block.y = START_Y;
+			board.setNextBlock(generator.generate());
 		}
-
-		board.setNextBlock(generator.generate());
 	}
 	
 	// Get center of the grid placement
@@ -130,11 +141,36 @@ public class GameLogic {
 		return board.getGrid().getWidth()/2 - grid.getWidth()/2;
 	}
 
-	private void gameOver()
+	public synchronized void reset()
 	{
-		throw new RuntimeException("Not implemented!");
+		if (timer != null)
+			timer.cancel();
+		timer = new Timer(true);
+		timer.schedule(new Dropper(this), 1000, 600);
+		resetBoard();
+		regenBlock();
+		gameOver = false;
+		update();
 	}
 
+	private void gameOver()
+	{
+		gameOver = true;
+		timer.cancel();
+		board.setNextBlock(null);
+		board.setGameOver(true);
+	}
+
+	private void resetBoard()
+	{
+		board.setNextBlock(null);
+		board.setGameOver(false);
+		board.getGrid().clear();
+		board.getBlock().getGrid().clear();
+		board.setScore(0);
+	}
+
+	//	Called only at end of public methods, only if board got modified
 	private void update()
 	{
 		board.notifyObservers();

@@ -8,6 +8,7 @@ public class GameBoard extends Observable implements java.io.Serializable {
 	private final PosGrid block;
 	private Grid nextBlock;
 	private int score;
+	private boolean gameOver;
 	
 	public GameBoard(Grid grid, PosGrid block)
 	{
@@ -43,6 +44,16 @@ public class GameBoard extends Observable implements java.io.Serializable {
 	public void setNextBlock(Grid nextBlock)
 	{
 		this.nextBlock = nextBlock;
+	}
+
+	public void setGameOver(boolean gameOver)
+	{
+		this.gameOver = gameOver;
+	}
+
+	public boolean isGameOver()
+	{
+		return gameOver;
 	}
 
 	@Override

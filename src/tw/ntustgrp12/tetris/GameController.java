@@ -29,6 +29,9 @@ public class GameController extends KeyAdapter {
 		case KeyEvent.VK_SPACE:
 			gameLogic.land();
 			break;
+		case KeyEvent.VK_R:
+			gameLogic.reset();
+			break;
 		}
 	}
 
